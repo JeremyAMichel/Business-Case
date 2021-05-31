@@ -1,0 +1,20 @@
+.perc30 {
+  width: 500px;
+  margin-bottom: 40px;
+}
+
+.pad {
+  padding: 20px 20px;
+}
+
+p {
+  font-size: 30px;
+}
+
+.purple {
+  color: #ad10ff;
+}
+
+.pad-bot {
+  padding-bottom: 10px;
+}
