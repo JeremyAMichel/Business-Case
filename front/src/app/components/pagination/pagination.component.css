@@ -3,11 +3,41 @@
 }
 
 .pagina-square {
-  width: 75px;
-  height: 75px;
+  width: 65px;
+  height: 65px;
   border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 10%;
+  font-size: 25px;
+  color: #ad10ff;
+}
+
+.pagina-square-bis {
+  width: 65px;
+  height: 65px;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 10%;
+}
+
+.pagina-square:hover {
+  cursor: pointer;
+  color: white;
+  background-color: black;
+}
+
+.pagina-square-bis:hover {
+  cursor: pointer;
 }
 
 .gap {
   gap: 1em;
+}
+
+.mb {
+  margin-bottom: 50px;
 }
