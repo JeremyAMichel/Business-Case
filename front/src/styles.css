@@ -1,3 +1,11 @@
+@import "~bootstrap/dist/css/bootstrap.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+@font-face {
+  font-family: "GangOfThree";
+  src: url("assets/font/go3v2.ttf") /* format("woff2") */;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -17,6 +25,28 @@ body {
   display: flex;
 }
 
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-bottom: 0;
+}
+
+.go3 {
+  font-family: "GangOfThree";
+  font-size: 60px;
+  color: black;
+}
+
 .bg-grey {
   background-color: #eeeeee;
 }
@@ -29,6 +59,39 @@ body {
   justify-content: center;
 }
 
-.space-betweend {
+.space-between {
   justify-content: space-between;
+}
+
+.ml10 {
+  margin-left: 10px;
+}
+
+.button {
+  background-color: #7ae1ff;
+  padding: 8px 20px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.295);
+  cursor: pointer;
+}
+
+.font-button {
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.my10 {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.shadow-header {
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.295);
+}
+
+.font-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.logo {
+  cursor: pointer;
 }

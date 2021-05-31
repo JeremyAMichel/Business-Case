@@ -1,0 +1,28 @@
+footer {
+  background-color: #ad10ff;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.go3 {
+  font-size: 50px;
+}
+
+.pct40 {
+  width: 45%;
+  justify-content: space-between;
+}
+
+/* GERER LA FORME DU FOOTER */
+
+.mr15 {
+  margin-right: 15px;
+}
+
+.ml15 {
+  margin-left: 15px;
+}
+
+p {
+  font-weight: 500;
+}

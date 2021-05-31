@@ -1,29 +1,69 @@
-<header>
-  <!-- FAIRE LES CONTAINER !! -->
+<header class="shadow-header">
   <div>
-    <div class="flex bg-grey vertical-center space-betweend">
-      <div class="flex vertical-center">
-        <img
-          src="assets/img/LogoVioletBleu.png"
-          alt="logo-fujicar"
-          width="100px"
-          height="auto"
-        /><!--temporaire le src va changer -->
-        <h1>FUJICAR</h1>
+    <div class="bg-grey my10">
+      <div class="container flex vertical-center space-between">
+        <div
+          routerLink="/"
+          routerLinkActive="active"
+          class="flex vertical-center logo"
+        >
+          <img
+            src="assets/img/LogoVioletBleu.png"
+            alt="logo-fujicar"
+            width="140px"
+            height="auto"
+          /><!--temporaire le src va changer -->
+          <h1 class="go3 ml10">FUJICAR</h1>
+        </div>
+        <div class="button"><p class="font-button">Se connecter</p></div>
       </div>
-      <!--ne pas oublier la font-->
-      <div class="button flex"><p>Se Connecter</p></div>
     </div>
   </div>
   <div>
     <nav>
       <div class="container">
-        <a routerLink="/" routerLinkActive="active">Trouvez votre voiture</a>
-        <a routerLink="/profil" routerLinkActive="active">Profil</a>
-        <a routerLink="/qui-sommes-nous" routerLinkActive="active"
-          >Qui sommes-nous ?</a
-        >
-        <a routerLink="/contact" routerLinkActive="active">Contact</a>
+        <ul class="flex">
+          <li
+            routerLink="/"
+            routerLinkActive="active"
+            class="
+              flex
+              nav-box-left
+              horizontal-center
+              vertical-center
+              font-roboto
+            "
+          >
+            Trouvez votre voiture
+          </li>
+          <li
+            routerLink="/profil"
+            routerLinkActive="active"
+            class="flex nav-box horizontal-center vertical-center font-roboto"
+          >
+            Profil
+          </li>
+          <li
+            routerLink="/qui-sommes-nous"
+            routerLinkActive="active"
+            class="flex nav-box horizontal-center vertical-center font-roboto"
+          >
+            Qui sommes-nous ?
+          </li>
+          <li
+            routerLink="/contact"
+            routerLinkActive="active"
+            class="
+              flex
+              nav-box-right
+              horizontal-center
+              vertical-center
+              font-roboto
+            "
+          >
+            Contact
+          </li>
+        </ul>
         <div><!--occupation de l'espace à droite de la nav--></div>
       </div>
     </nav>

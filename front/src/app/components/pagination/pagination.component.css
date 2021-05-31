@@ -1,0 +1,13 @@
+.mirror-img {
+  transform: scaleX(-1);
+}
+
+.pagina-square {
+  width: 75px;
+  height: 75px;
+  border: 1px solid black;
+}
+
+.gap {
+  gap: 1em;
+}
