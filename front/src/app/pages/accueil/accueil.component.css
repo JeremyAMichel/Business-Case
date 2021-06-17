@@ -6,6 +6,14 @@ app-slider {
   width: 83%;
 }
 
+app-pubs {
+  width: 17%;
+}
+
+app-annonces {
+  width: 83%;
+}
+
 .gap {
   gap: 1em;
 }
