@@ -25,6 +25,10 @@ body {
   display: flex;
 }
 
+.flexcol {
+  flex-direction: column;
+}
+
 .h1,
 .h2,
 .h3,
@@ -94,4 +98,12 @@ p {
 
 .logo {
   cursor: pointer;
+}
+
+.CBlack {
+  color: black;
+}
+
+.purp {
+  color: #ad10ff;
 }

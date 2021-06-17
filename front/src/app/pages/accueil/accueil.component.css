@@ -1,0 +1,15 @@
+app-menu {
+  width: 17%;
+}
+
+app-slider {
+  width: 83%;
+}
+
+.gap {
+  gap: 1em;
+}
+
+.mb {
+  margin-bottom: 2em;
+}

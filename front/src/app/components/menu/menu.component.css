@@ -1,0 +1,25 @@
+aside {
+  background-color: #ad10ff;
+  width: 100%;
+  padding: 30px 0px;
+}
+
+.gap {
+  gap: 1em;
+}
+
+.container-perso {
+  width: 80%;
+}
+
+.smaller {
+  padding: 4px 0px;
+}
+
+.select-perso {
+  padding: 8px 8px;
+}
+
+#annee-select {
+  margin-bottom: 15px;
+}

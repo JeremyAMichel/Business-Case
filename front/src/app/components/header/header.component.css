@@ -49,3 +49,7 @@ a:hover {
   width: 200px;
   height: 120px;
 }
+
+header {
+  margin-bottom: 4em;
+}

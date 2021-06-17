@@ -1,31 +1,28 @@
-<div id="slider" class="item-center flex diaporamaContainer">
+<div id="slider" class="item-center flex diaporamaContainer flexcol">
   <!-- l'image display sur le slider -->
-  <img
-    id="images"
-    src="../../../../../img/1968_Mazda_Cosmo-Sport_01.jpg"
-    class="relative"
-    height="auto"
-    width="85%"
-  />
-
-  <!-- arrow de nav précedente -->
-  <div id="arrowLeft" class="absolute btnNav left">
+  <div class="item-center flex">
     <img
-      src="../../../../../img/left-arrow.png"
-      class="p5"
-      height="50px"
-      width="auto"
+      id="images"
+      src="assets/img/1968_Mazda_Cosmo-Sport_01.jpg"
+      class="relative"
+      height="auto"
+      width="100%"
     />
-  </div>
 
-  <!-- arrow de nav suivante -->
-  <div id="arrowRight" class="absolute btnNav right">
-    <img
-      src="../../../../../img/next.png"
-      class="p5"
-      height="50px"
-      width="auto"
-    />
+    <!-- arrow de nav précedente -->
+    <div id="arrowLeft" class="absolute btnNav left">
+      <img
+        src="assets/img/left-arrow.png"
+        class=""
+        height="50px"
+        width="auto"
+      />
+    </div>
+
+    <!-- arrow de nav suivante -->
+    <div id="arrowRight" class="absolute btnNav right">
+      <img src="assets/img/next.png" class="" height="50px" width="auto" />
+    </div>
   </div>
   <!-- bouton PLAY/PAUSE --voir si il est necessaire -- -->
   <!-- <div id="playPause" class="absolute item-center flex none">
@@ -41,8 +38,31 @@
     </div> -->
 
   <!-- la légende en dessous du slider associé avec l'image display -->
-  <div class="absolute item-center flex legende">
-    <h2 id="legende"><!--DESCRIPTION A CHARGER--></h2>
+  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <!--DESCRIPTION A CHARGER-->
+  <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+  <div class="horizontal-center flex legende flexcol">
+    <!-- premiere ligne de la légende -->
+    <div class="flex gap">
+      <h2 class="purp">115 000 €</h2>
+      <h2 class="CBlack">MAZDA COSMO SPORT</h2>
+      <h2 class="CBlack">1985</h2>
+      <h2 class="CBlack">10 000 km</h2>
+    </div>
+    <!-- deuxieme ligne de la légende -->
+    <div>
+      <p class="CBlack justify flex flex-wrap">
+        lorem ipsum lorem ipsum it eityli fjksljjflkj hkjggjh hhdslljqsh
+        hjhjhjkhqjkhjkhsjk ggjgjj ghghhgh zzjleome lorem ipsum lorem ipsum it
+        eityli fjksljjflkj hkjggjh hhdslljqsh hjhjhjkhqjkhjkhsjk ggjgjj ghghhgh
+        zzjleome lorem ipsum lorem ipsum it eityli fjksljjflkj hkjggjh
+        hhdslljqsh hjhjhjkhqjkhjkhsjk ggjgjj ghghhgh zzjleome
+      </p>
+    </div>
+    <!-- <h2 id="legende">
+      
+      je suis une légende !
+    </h2> -->
   </div>
 </div>
 <!-- voir le slider js -->

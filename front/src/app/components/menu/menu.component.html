@@ -1,61 +1,63 @@
-<div>
-  <div>
-    <label for="marque-select">Marque :</label>
+<aside class="flex flexcol vertical-center">
+  <div class="flex flexcol gap container-perso">
+    <div class="flex flexcol">
+      <label for="marque-select" class="CBlack">Marque :</label>
 
-    <select name="marque" id="marque-select">
-      <option value="">--Marque--</option>
-      <option value="Honda">Honda</option>
-      <option value="Toyota">Toyota</option>
-      <option value="Mazda">Mazda</option>
-      <option value="Nissan">Nissan</option>
-    </select>
+      <select name="marque" id="marque-select" class="select-perso">
+        <option value="">Marque</option>
+        <option value="Honda">Honda</option>
+        <option value="Toyota">Toyota</option>
+        <option value="Mazda">Mazda</option>
+        <option value="Nissan">Nissan</option>
+      </select>
+    </div>
+
+    <div class="flex flexcol">
+      <label for="modele-select" class="CBlack">Modèle :</label>
+
+      <select name="modele" id="modele-select" class="select-perso" disabled>
+        <option value="">Modèle</option>
+        <!-- gérer les option en fonction de la marque choisi -->
+      </select>
+    </div>
+    <div class="flex flexcol">
+      <label for="prix-select" class="CBlack">Prix :</label>
+
+      <select name="prix" id="prix-select" class="select-perso">
+        <option value="">Prix</option>
+        <!-- afficher la barre de prix -->
+      </select>
+    </div>
+
+    <div class="flex flexcol">
+      <label for="kilometrage-select" class="CBlack">Kilométrage :</label>
+
+      <select name="kilometrage" id="kilometrage-select" class="select-perso">
+        <option value="">Kilométrage</option>
+        <!-- voir les options de kilométrage à mettre -->
+      </select>
+    </div>
+
+    <div class="flex flexcol">
+      <label for="energie-select" class="CBlack">Energie :</label>
+
+      <select name="energie" id="energie-select" class="select-perso">
+        <option value="">Energie</option>
+        <!-- voir les options d'energie à mettre -->
+      </select>
+    </div>
+
+    <div class="flex flexcol">
+      <label for="annee-select" class="CBlack">Année :</label>
+
+      <select name="annee" id="annee-select" class="select-perso">
+        <option value="">Année</option>
+        <!-- voir les options d'année à mettre -->
+      </select>
+    </div>
+
+    <div class="button smaller flex vertical-center horizontal-center">
+      <p class="CBlack">Envoyer</p>
+    </div>
   </div>
-
-  <div>
-    <label for="modele-select">Modèle :</label>
-
-    <select name="modele" id="modele-select">
-      <option value="">--Modèle --</option>
-      <!-- gérer les option en fonction de la marque choisi -->
-    </select>
-  </div>
-  <div>
-    <label for="prix-select">Prix :</label>
-
-    <select name="prix" id="prix-select">
-      <option value="">--Prix--</option>
-      <!-- afficher la barre de prix -->
-    </select>
-  </div>
-
-  <div>
-    <label for="kilometrage-select">Kilométrage :</label>
-
-    <select name="kilometrage" id="kilometrage-select">
-      <option value="">--Kilométrage--</option>
-      <!-- voir les options de kilométrage à mettre -->
-    </select>
-  </div>
-
-  <div>
-    <label for="energie-select">Energie :</label>
-
-    <select name="energie" id="energie-select">
-      <option value="">--Energie--</option>
-      <!-- voir les options d'energie à mettre -->
-    </select>
-  </div>
-
-  <div>
-    <label for="annee-select">Année :</label>
-
-    <select name="annee" id="annee-select">
-      <option value="">--Année--</option>
-      <!-- voir les options d'année à mettre -->
-    </select>
-  </div>
-
-  <div class="button">
-    <p>Envoyer</p>
-  </div>
-</div>
+</aside>

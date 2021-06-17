@@ -20,6 +20,7 @@ import { MonCompteComponent } from './components/mon-compte/mon-compte.component
 import { DetailedAnnonceComponent } from './pages/detailed-annonce/detailed-annonce.component';
 import { DetailedSliderComponent } from './components/detailed-slider/detailed-slider.component';
 import { OtherAnnoncesComponent } from './components/other-annonces/other-annonces.component';
+import { PubsComponent } from './components/pubs/pubs.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { OtherAnnoncesComponent } from './components/other-annonces/other-annonc
     DetailedAnnonceComponent,
     DetailedSliderComponent,
     OtherAnnoncesComponent,
+    PubsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
