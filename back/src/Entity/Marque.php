@@ -7,9 +7,17 @@ use App\Repository\MarqueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"marque:get"}
+ *      }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"nom"="partial","modeles.denomination"="partial"})
  * @ORM\Entity(repositoryClass=MarqueRepository::class)
  */
 class Marque
@@ -23,11 +31,13 @@ class Marque
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"annonce:get", "marque:get", "modele:get"})
      */
     private $nom;
 
     /**
      * @ORM\OneToMany(targetEntity=Modele::class, mappedBy="marque")
+     * @Groups({"marque:get"})
      */
     private $modeles;
 

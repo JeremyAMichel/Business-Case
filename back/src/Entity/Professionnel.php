@@ -8,8 +8,23 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
+use ApiPlatform\Core\Annotation\ApiFilter;
+
+
 
 /**
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"pro:get"}
+ *      }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"nom"="partial","prenom"="partial",
+ * "numTel"="partial","numeroSiret"="partial","garages.nom"="partial","garages.ville"="partial",
+ * "garages.codePostal"="partial"})
  * @ORM\Entity(repositoryClass=ProfessionnelRepository::class)
  */
 class Professionnel implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,11 +38,13 @@ class Professionnel implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"pro:get"})
      */
     private $login;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"pro:get"})
      */
     private $roles = [];
 
@@ -39,31 +56,37 @@ class Professionnel implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"garage:get", "pro:get"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"garage:get", "pro:get"})
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"garage:get", "pro:get"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=12)
+     * @Groups({"garage:get", "pro:get"})
      */
     private $numTel;
 
     /**
      * @ORM\Column(type="string", length=14)
+     * @Groups({"garage:get", "pro:get"})
      */
     private $numeroSiret;
 
     /**
      * @ORM\OneToMany(targetEntity=Garage::class, mappedBy="professionnel")
+     * @Groups({"pro:get"})
      */
     private $garages;
 

@@ -8,8 +8,26 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+
+
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"annonce:get"}
+ *      }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"referenceAnnonce"="partial",
+ * "miseEnCirculation"="partial","carburant.type"="partial","modele.denomination"="partial",
+ * "modele.marque.nom"="partial","garage.nom"="partial","garage.ville"="partial", "garage.codePostal"="partial"})
+ * @ApiFilter(RangeFilter::class, properties={"kilometrage", "miseEnCirculation", "prix"})
+ * @ApiFilter(NumericFilter::class, properties={"miseEnCirculation"})
+ * @ApiFilter(DateFilter::class, properties={"datePublication"})
  * @ORM\Entity(repositoryClass=AnnonceRepository::class)
  */
 class Annonce
@@ -23,11 +41,13 @@ class Annonce
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
      */
     private $titre;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"annonce:get"})
      */
     private $description;
 
@@ -38,46 +58,55 @@ class Annonce
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
      */
     private $referenceAnnonce;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"annonce:get"})
      */
     private $miseEnCirculation;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"annonce:get"})
      */
     private $kilometrage;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="decimal")
+     * @Groups({"annonce:get"})
      */
     private $prix;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
      */
     private $datePublication;
 
     /**
      * @ORM\ManyToOne(targetEntity=Carburant::class, inversedBy="annonces")
+     * @Groups({"annonce:get"})
      */
     private $carburant;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="annonce")
+     * @Groups({"annonce:get"})
      */
     private $images;
 
     /**
      * @ORM\ManyToOne(targetEntity=Modele::class, inversedBy="annonces")
+     * @Groups({"annonce:get"})
      */
     private $modele;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonces")
+     * @Groups({"annonce:get"})
      */
     private $garage;
 

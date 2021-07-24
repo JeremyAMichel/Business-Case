@@ -7,9 +7,23 @@ use App\Repository\GarageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"garage:get"}
+ *      }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"nom"="partial","numTel"="partial","ville"="partial","codePostal"="partial",
+ * "annonces.referenceAnnonce"="partial","professionnel.nom"="partial","professionnel.prenom"="partial",
+ * "professionnel.numeroSiret"="partial"})
+ * @ApiFilter(DateFilter::class, properties={"annonces.datePublication"})
  * @ORM\Entity(repositoryClass=GarageRepository::class)
  */
 class Garage
@@ -23,46 +37,55 @@ class Garage
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"annonce:get", "garage:get","pro:get"})
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=12)
+     * @Groups({"annonce:get", "garage:get","pro:get"})
      */
     private $numTel;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"annonce:get", "garage:get","pro:get"})
      */
     private $adresseLigne1;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"annonce:get", "garage:get", "pro:get"})
      */
     private $adresseLigne2;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"annonce:get", "garage:get", "pro:get"})
      */
     private $adresseLigne3;
 
     /**
      * @ORM\Column(type="string", length=50)
+     * @Groups({"annonce:get", "garage:get", "pro:get"})
      */
     private $ville;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Groups({"annonce:get", "garage:get", "pro:get"})
      */
     private $codePostal;
 
     /**
      * @ORM\OneToMany(targetEntity=Annonce::class, mappedBy="garage")
+     * @Groups({"garage:get"})
      */
     private $annonces;
 
     /**
      * @ORM\ManyToOne(targetEntity=Professionnel::class, inversedBy="garages")
+     * @Groups({"annonce:get", "garage:get"})
      */
     private $professionnel;
 

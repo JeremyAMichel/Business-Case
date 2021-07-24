@@ -5,9 +5,18 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={
+ *          "groups"={"images:get"}
+ *      }
+ * )
+ * @ApiFilter(SearchFilter::class, properties={"annonce.referenceAnnonce"="partial"})
  * @ORM\Entity(repositoryClass=ImageRepository::class)
  */
 class Image
@@ -16,21 +25,25 @@ class Image
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"images:get"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
+     * @Groups({"annonce:get", "images:get"})
      */
     private $legende;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"annonce:get", "images:get"})
      */
     private $path;
 
     /**
      * @ORM\ManyToOne(targetEntity=Annonce::class, inversedBy="images")
+     * @Groups({"images:get"})
      */
     private $annonce;
 
