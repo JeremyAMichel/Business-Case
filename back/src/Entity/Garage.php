@@ -16,6 +16,28 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
+ *      collectionOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "post"={
+ *              "security"="is_granted('ROLE_PRO')"
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.professionnel == user"
+ *          },
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.professionnel == user"
+ *          },
+ *          "delete"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.professionnel == user"
+ *          },
+ *          "patch"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.professionnel == user"
+ *          }
+ *      },
  *      normalizationContext={
  *          "groups"={"garage:get"}
  *      }
@@ -87,7 +109,7 @@ class Garage
      * @ORM\ManyToOne(targetEntity=Professionnel::class, inversedBy="garages")
      * @Groups({"annonce:get", "garage:get"})
      */
-    private $professionnel;
+    public $professionnel;
 
     public function __construct()
     {

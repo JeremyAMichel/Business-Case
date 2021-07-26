@@ -14,10 +14,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
 
-
-
 /**
  * @ApiResource(
+ *      attributes={
+ *          "security"="is_granted('ROLE_ADMIN')"
+ *      },
  *      normalizationContext={
  *          "groups"={"pro:get"}
  *      }

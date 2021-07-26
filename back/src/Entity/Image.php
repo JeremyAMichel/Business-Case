@@ -12,6 +12,28 @@ use ApiPlatform\Core\Annotation\ApiFilter;
 
 /**
  * @ApiResource(
+ *      collectionOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN')"
+ *          },
+ *          "post"={
+ *              "security"="is_granted('ROLE_PRO')"
+ *          }
+ *      },
+ *      itemOperations={
+ *          "get"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.annonce.garage.professionnel == user"
+ *          },
+ *          "put"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.annonce.garage.professionnel == user"
+ *          },
+ *          "delete"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.annonce.garage.professionnel == user"
+ *          },
+ *          "patch"={
+ *              "security"="is_granted('ROLE_ADMIN') or object.annonce.garage.professionnel == user"
+ *          }
+ *      },
  *      normalizationContext={
  *          "groups"={"images:get"}
  *      }
@@ -45,7 +67,7 @@ class Image
      * @ORM\ManyToOne(targetEntity=Annonce::class, inversedBy="images")
      * @Groups({"images:get"})
      */
-    private $annonce;
+    public $annonce;
 
     public function getId(): ?int
     {
