@@ -9,11 +9,15 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+
+use ApiPlatform\Core\Annotation\ApiProperty;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use DateTimeInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -21,8 +25,54 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *      collectionOperations={
  *          "get",
  *          "post"={
- *              "security"="is_granted('ROLE_PRO')"
- *          }
+ *              "security"="is_granted('ROLE_PRO')",
+ *          },
+ *          "create_annonce"={
+ *              "method"= "POST",
+ *              "openapi_context"={
+ *                  "summary"     = "Create an announce",
+ *                  "description" = "# Create an announce",
+ *                  "requestBody" = {
+ *                      "content" = {
+ *                          "application/json" = {
+ *                              "schema"  = {
+ *                                  "type"       = "object",
+ *                                  "properties" =
+ *                                      {
+ *                                          "titre"        = {"type" = "string"},
+ *                                          "description" = {"type" = "string"},
+ *                                          "descComplete" = {"type" = "string"},
+ *                                          "referenceAnnonce" = {"type" = "string"},
+ *                                          "miseEnCirculation" = {"type" = "integer"},
+ *                                          "kilometrage" = {"type" = "integer"},
+ *                                          "prix" = {"type" = "decimal"},
+ *                                          "datePublication" = {
+ *                                              "type": "string",
+ *                                              "format": "date-time"
+ *                                          },
+ *                                          "carburant.id" = {"type" = "integer"},
+ *                                          "modele.id" ={"type" = "integer"},
+ *                                          "garage.id" ={"type" = "integer"},
+ *                                      },
+ *                              },
+ *                              "example" = {
+ *                                  "titre"        = "Une annonce random",
+ *                                  "description" = "Une description random",
+ *                                  "descComplete" = "Une description random un peu plus complete",
+ *                                  "referenceAnnonce"= "10caracter",
+ *                                  "miseEnCirculation" = 2002,
+ *                                  "kilometrage" = 12000,
+ *                                  "prix" = "10000.99",
+ *                                  "datePublication" = "2021-08-06 11:46",
+ *                                  "carburant.id" = 2,
+ *                                  "modele.id" = 4,
+ *                                  "garage.id" = 8,    
+ *                              },
+ *                          },
+ *                      },
+ *                  },
+ *              },
+ *          },
  *      },
  *      itemOperations={
  *          "get",
@@ -36,9 +86,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *              "security"="is_granted('ROLE_ADMIN') or object.garage.professionnel == user"
  *          }
  *      },
- *      normalizationContext={
- *          "groups"={"annonce:get"}
- *      }
+ *      normalizationContext={"groups"={"annonce:get"}},
+ *      denormalizationContext={"groups"={"annonce:post"}},
  * )
  * @ApiFilter(SearchFilter::class, properties={"referenceAnnonce"="partial",
  * "miseEnCirculation"="partial","carburant.type"="partial","modele.denomination"="partial",
@@ -59,72 +108,136 @@ class Annonce
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
+     * @Groups({"annonce:get", "annonce:post", "garage:get", "images:get", "modele:get"}),
      */
     private $titre;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
+     * @Assert\NotBlank(
+     *      message="Description ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="Description ne peut pas être null"
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Groups({"annonce:post"})
+     * @Assert\NotBlank(
+     *      message="Description complete ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="Description complete ne peut pas être null"
+     * )
      */
     private $descComplete;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
+     * @Groups({"annonce:get", "annonce:post", "garage:get", "images:get", "modele:get"})
+     * @Assert\NotBlank(
+     *      message="La reference d'annonce ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="La reference d'annonce ne peut pas être null"
+     * )
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 10,
+     *      minMessage = "La reference de l'annonce doit contenir exactement 10 caractères",
+     *      maxMessage = "La reference de l'annonce doit contenir exactement 10 caractères"
+     * )
      */
     private $referenceAnnonce;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
+     * @Assert\Type(
+     *     type="integer",
+     *     message="La mise en circulation de l'annonce doit être un entier."
+     * )
+     * @Assert\NotBlank(
+     *      message="La mise en circulation de l'annonce ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="La mise en circulation de l'annonce ne peut pas être null"
+     * )
+     * @Assert\Positive(
+     *      message="La mise en circulation de l'annonce doit être un nombre positif"
+     * )
      */
     private $miseEnCirculation;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Le kilométrage doit être un entier."
+     * )
+     * @Assert\NotBlank(
+     *      message="Le kilométrage ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="Le kilométrage ne peut pas être null"
+     * )
+     * @Assert\Positive(
+     *      message="Le kilométrage doit être un nombre positif"
+     * )
      */
     private $kilometrage;
 
     /**
      * @ORM\Column(type="decimal")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
+     * @Assert\Type(
+     *     type="double",
+     *     message="Le prix doit être un ciffre à virgule."
+     * )
+     * @Assert\NotBlank(
+     *      message="Le prix ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="Le prix ne peut pas être null"
+     * )
+     * @Assert\Positive(
+     *      message="Le prix doit être un nombre positif"
+     * )
      */
     private $prix;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"annonce:get", "garage:get", "images:get", "modele:get"})
+     * @Groups({"annonce:get", "annonce:post", "garage:get", "images:get", "modele:get"})
      */
     private $datePublication;
 
     /**
      * @ORM\ManyToOne(targetEntity=Carburant::class, inversedBy="annonces")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
      */
-    private $carburant;
+    public $carburant;
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="annonce")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
      */
-    private $images;
+    public $images;
 
     /**
      * @ORM\ManyToOne(targetEntity=Modele::class, inversedBy="annonces")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
      */
-    private $modele;
+    public $modele;
 
     /**
      * @ORM\ManyToOne(targetEntity=Garage::class, inversedBy="annonces")
-     * @Groups({"annonce:get"})
+     * @Groups({"annonce:get", "annonce:post"})
      */
     public $garage;
 

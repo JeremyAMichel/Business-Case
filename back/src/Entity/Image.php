@@ -9,6 +9,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use Symfony\Component\Validator\Constraints as Assert;
+
+use ApiPlatform\Core\Annotation\ApiProperty;
+
 
 /**
  * @ApiResource(
@@ -17,7 +21,7 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  *              "security"="is_granted('ROLE_ADMIN')"
  *          },
  *          "post"={
- *              "security"="is_granted('ROLE_PRO')"
+ *              "security"="is_granted('ROLE_PRO')",
  *          }
  *      },
  *      itemOperations={
@@ -34,9 +38,8 @@ use ApiPlatform\Core\Annotation\ApiFilter;
  *              "security"="is_granted('ROLE_ADMIN') or object.annonce.garage.professionnel == user"
  *          }
  *      },
- *      normalizationContext={
- *          "groups"={"images:get"}
- *      }
+ *      normalizationContext={"groups"={"images:get"}},
+ *      denormalizationContext={"groups"={"annonce:post"}},
  * )
  * @ApiFilter(SearchFilter::class, properties={"annonce.referenceAnnonce"="partial"})
  * @ORM\Entity(repositoryClass=ImageRepository::class)
@@ -47,7 +50,19 @@ class Image
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"images:get"})
+     * @Groups({"images:get", "annonce:post"})
+     * @Assert\Type(
+     *     type="integer",
+     *     message="L'id doit être un entier."
+     * )
+     * @Assert\Positive(
+     *      message="L'id doit être un nombre positif"
+     * )
+     * @ApiProperty(
+     *     attributes={
+     *         "openapi_context"={"type"="integer", "example"="1"}
+     *     }
+     * )
      */
     private $id;
 

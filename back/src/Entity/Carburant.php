@@ -8,13 +8,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
  *      collectionOperations={
  *          "get",
  *          "post"={
- *              "security"="is_granted('ROLE_ADMIN')"
+ *              "security"="is_granted('ROLE_ADMIN')",
+ *              "normalization_context"={
+ *                  "groups"={"carburant:post"}
+ *              }
  *          }
  *      },
  *      itemOperations={
@@ -30,7 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          }
  *      },
  *      normalizationContext={
- *          "groups"={"carburant:get"}
+ *          "groups"={"carburant:get", "carburant:post"}
  *      }
  * )
  * @ORM\Entity(repositoryClass=CarburantRepository::class)
@@ -41,12 +45,20 @@ class Carburant
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"annonce:post"})
+     * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"annonce:get", "carburant:get"})
+     * @Assert\NotNull(
+     *      message="Le type ne peut pas être null"
+     * )
+     * @Assert\NotBlank(
+     *      message="Le type ne peut pas être vide"
+     * )
      */
     private $type;
 

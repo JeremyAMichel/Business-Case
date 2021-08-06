@@ -13,6 +13,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Annotation\ApiFilter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ApiResource(
@@ -54,6 +55,20 @@ class Garage
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"annonce:post"})
+     * @Assert\Type(
+     *     type="decimal",
+     *     message="Le prix doit être un decimal."
+     * )
+     * @Assert\NotBlank(
+     *      message="Le prix ne peut pas être vide"
+     * )
+     * @Assert\NotNull(
+     *      message="Le prix ne peut pas être null"
+     * )
+     * @Assert\Positive(
+     *      message="Le prix doit être un nombre positif"
+     * )
      */
     private $id;
 
